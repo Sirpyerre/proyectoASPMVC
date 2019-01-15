@@ -45,3 +45,29 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 }
+
+<script>
+    $("#frm-alumno").submit(function () {
+        var form = $(this);
+
+        $.ajax({
+            dataType: 'json',
+            type:'post',
+            data: form.serialize(),
+            url: form.attr('action'),
+            success: function (r) {
+
+                if (r.response) {
+                    window.location = r.href;
+                } else {
+                    alert(r.message);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus + ' ' + errorThrown);
+            }
+        });
+
+        return false;
+    });
+</script>

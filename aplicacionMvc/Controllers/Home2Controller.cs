@@ -22,17 +22,22 @@ namespace aplicacionMvc.Controllers
             return View(alumno.Obtener(id));
         }
 
-        public ActionResult Guardar(Alumno model)
+        public JsonResult Guardar(Alumno model)
         {
+            var rm = new ResponseModel();
+
             if (ModelState.IsValid)
             {
-                model.Guardar();
-                return Redirect("~/home2");
+                rm = model.Guardar();
+                
+                if (rm.response)
+                {
+                    rm.href = Url.Content("~/home2");
+                }
             }
-            else
-            {
-                return View("~/views/home2/crud.cshtml", model);
-            }
+
+
+            return Json(rm);
         }
 
         public ActionResult Crud( int id = 0)
